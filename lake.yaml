@@ -10,7 +10,7 @@ services:
     container_name: minio
     environment:
       MINIO_REGION_NAME: europe-west-2
-      MINIO_REGION: urope-west-2
+      MINIO_REGION: europe-west-2
       MINIO_DOMAIN: minio
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
