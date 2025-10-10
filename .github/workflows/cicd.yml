@@ -40,13 +40,22 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+          curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq "{ jwt: .value, role: \"<ROLE-NAME>\" }" > ./token.json
+          echo 'GitHub Actions Token Claims'
+          cat ./token.json | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
+
+          echo 'Vault Login Response'
+          curl -sSLf -X POST -H "Content-Type: application/json" --data @token.json <URL>/v1/auth/jwt/github_actions/login
+
+          # Remove the token file when we're done (if we don't fail)
+          rm ./token.json
       - name: perform token run
         run: |
          echo $(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://github.com/murugcp")
         shell: bash
       - name: Retreive Secrets
         id: retrieve-secrets
-        uses: hashicorp/vault-action@v2.4.1
+        uses: hashicorp/vault-action@v3.4.0
         with:
          url: ${{ env.hashiUrl }}
          role: ${{ env.roleName }}
