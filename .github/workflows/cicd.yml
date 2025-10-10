@@ -38,14 +38,14 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq "{ jwt: .value, role: \"<ROLE-NAME>\" }" > ./token.json
+          echo 1.Add other actions to build,
+          echo 2.test, and deploy your project.
+          curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq "{ jwt: .value, role: \"gha-test-role\" }" > ./token.json
           echo 'GitHub Actions Token Claims'
           cat ./token.json | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
 
           echo 'Vault Login Response'
-          curl -sSLf -X POST -H "Content-Type: application/json" --data @token.json <URL>/v1/auth/jwt/github_actions/login
+          curl -sSLf -X POST -H "Content-Type: application/json" --data @token.json https://localhost:8200/v1/auth/jwt/github_actions/login
 
           # Remove the token file when we're done (if we don't fail)
           rm ./token.json
