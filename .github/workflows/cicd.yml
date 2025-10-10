@@ -42,7 +42,7 @@ jobs:
           echo test, and deploy your project.
       - name: perform token run
         run: |
-         echo $(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://github.com/murugcp" | base64)
+         echo $(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://github.com/murugcp")
         shell: bash
       - name: Retreive Secrets
         uses: hashicorp/vault-action@v2.4.1
