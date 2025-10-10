@@ -45,6 +45,7 @@ jobs:
          echo $(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://github.com/murugcp")
         shell: bash
       - name: Retreive Secrets
+        id: retrieve-secrets
         uses: hashicorp/vault-action@v2.4.1
         with:
          url: ${{ env.hashiUrl }}
