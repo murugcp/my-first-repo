@@ -1,0 +1,4 @@
+*.hcl
+*.db
+**/data
+**/certs

@@ -6,7 +6,7 @@ services:
       - "19120:19120"
 
   minio:
-    image: mmgcp/minio
+    image: mmgcp/minio:1.0
     container_name: minio
     environment:
       MINIO_REGION_NAME: europe-west-2
