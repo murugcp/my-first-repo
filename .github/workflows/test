@@ -1,0 +1,34 @@
+name: OIDC Sample
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This permission is required to request the token
+    steps:
+      - name: Get OIDC token
+        id: get_token
+        uses: actions/checkout@v3 # or any other action
+        # The following steps show how to get the token
+        # The id-token permission allows you to get the token
+        # If the token is not requested from the `actions/checkout@v3` action
+        # The token is available in `steps.get_token.outputs.token`
+        # Use the token to get an access token from your cloud provider
+        run: |
+          echo "Token: ${{ steps.get_token.outputs.token }}"
+
+      - name: Request OIDC token
+        id: request_token
+        run: |
+          # Use the token to get an access token from your cloud provider
+          # The following is a placeholder for the actual token request
+          echo "Requesting access token from cloud provider..."
+          # ... your logic to exchange the OIDC token for an access token ...
+
+      - name: Use access token
+        run: |
+          echo "Access token obtained successfully."
+          # ... use the access token to access cloud resources ...
