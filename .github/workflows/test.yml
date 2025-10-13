@@ -13,11 +13,10 @@ jobs:
         run: |
             export TOKEN=$(curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL")
             echo $TOKEN | jq .value | base64
-            echo "token=$(echo $TOKEN)" >> $GITHUB_OUTPUT
-
+            echo "token=$(echo $TOKEN)" 
       - name: Troubleshoot Token
         run: |
-            export TOKEN_JSON=$(echo $GITHUB_OIDC_TOKEN | jq "{ jwt: .value, role: \"gha-test-role\" }")
+            export TOKEN_JSON=$(echo ${{ steps.auth-token.outputs.token }} | jq "{ jwt: .value, role: \"gha-test-role\" }")
             echo $TOKEN_JSON | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
             echo $TOKEN_JSON | curl -sSLf -X PUT -H "Content-Type: application/json" --data @- https://hexadic-unridered-tasia.ngrok-free.dev/v1/auth/jwt/login
         
