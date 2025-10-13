@@ -10,7 +10,7 @@ jobs:
       - name: Get OIDC token
         id: get_token
         uses: actions/checkout@v3
-        run: |
+      - run: |
           echo "Token: ${{ steps.get_token.outputs.token }}"
       - name: Request OIDC token
         id: request_token
@@ -19,6 +19,7 @@ jobs:
           # The following is a placeholder for the actual token request
           echo "Requesting access token from cloud provider..."
           # ... your logic to exchange the OIDC token for an access token ...
+          echo "Token: ${{ steps.get_token.outputs.token }}"
       - name: Use access token
         run: |
           echo "Access token obtained successfully."
