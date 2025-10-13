@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v3
       - run: |
           echo "Token: ${{ steps.get_token.outputs.token }}"
+          echo "Hello M $ACTIONS_ID_TOKEN_REQUEST_TOKEN"
       - name: Request OIDC token
         id: request_token
         run: |
