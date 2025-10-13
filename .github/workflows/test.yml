@@ -5,6 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       id-token: write
     steps:
       - name: Get OIDC token
@@ -19,7 +20,7 @@ jobs:
           # The following is a placeholder for the actual token request
           echo "Requesting access token from cloud provider..."
           # ... your logic to exchange the OIDC token for an access token ...
-          echo "Token: ${{ steps.get_token.outputs.token }}"
+          
       - name: Use access token
         run: |
           echo "Access token obtained successfully."
