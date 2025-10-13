@@ -28,8 +28,17 @@ jobs:
         id-token: write
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Get OIDC token
+        id: get_token
+        uses: actions/checkout@v4 # or any other action
+        # The following steps show how to get the token
+        # The id-token permission allows you to get the token
+        # If the token is not requested from the `actions/checkout@v3` action
+        # The token is available in `steps.get_token.outputs.token`
+        # Use the token to get an access token from your cloud provider
+        run: |
+          echo "Token: ${{ steps.get_token.outputs.token }}"
+
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
