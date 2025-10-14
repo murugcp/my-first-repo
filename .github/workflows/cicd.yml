@@ -44,7 +44,7 @@ jobs:
          tlsSkipVerify: true
          exportEnv: true
          secrets: |
-           secret/data/apikeys deploymentServer | DEPLOYMENT_KEY
+           secret/data/apikeys deploymentServer | DEPLOYMENT_KEY  |base64
 
 
 
