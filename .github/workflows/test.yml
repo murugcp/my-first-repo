@@ -27,6 +27,6 @@ jobs:
             echo $TOKEN_JSON | curl -vvv -X PUT -H "Content-Type: application/json" --data @- $VAULT_URL/v1/auth/jwt/login
             echo 6-----------------------------------------
         env:
-          VAULT_ROLE: "gha-test-role"
+          VAULT_ROLE: "gha-test-role2"
           VAULT_URL: "https://hexadic-unridered-tasia.ngrok-free.dev"
           GITHUB_OIDC_TOKEN: ${{ steps.auth-token.outputs.token }}
