@@ -13,7 +13,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 env:
-  hashiUrl: https://hexadic-unridered-tasia.ngrok-free.dev:8200
+  hashiUrl: https://hexadic-unridered-tasia.ngrok-free.dev
   roleName: gha-test-role
   audience: https://github.com/murugcp
  # namespace: cicd
