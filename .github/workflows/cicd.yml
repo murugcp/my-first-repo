@@ -44,8 +44,11 @@ jobs:
          tlsSkipVerify: true
          exportEnv: true
          secrets: |
-           secret/data/apikeys deploymentServer | DEPLOYMENT_KEY  |base64
-
+           secret/data/apikeys deploymentServer | DEPLOYMENT_KEY
+      - name: output here
+        run: |
+         echo helloooo
+         echo $DEPLOYMENT_KEY 
 
 
 
