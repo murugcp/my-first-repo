@@ -1,0 +1,32 @@
+name: OIDC Sample
+'on':
+  workflow_dispatch: null
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Set JWT Auth Token
+        id: auth-token
+        run: |
+            export TOKEN=$(curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL")
+            echo 1-----------------------------------------
+            echo $TOKEN | jq .value | base64
+            echo 2-----------------------------------------
+            echo "token=$(echo $TOKEN)" >> $GITHUB_OUTPUT
+            echo 3-----------------------------------------
+
+      - name: Troubleshoot Token
+        run: |
+            export TOKEN_JSON=$(echo $GITHUB_OIDC_TOKEN | jq "{ jwt: .value, role: \"$VAULT_ROLE\" }")
+            echo 4-----------------------------------------
+            echo $TOKEN_JSON | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
+            echo 5-----------------------------------------
+            echo $TOKEN_JSON | curl -vvv -X PUT -H "Content-Type: application/json" --data @- $VAULT_URL/v1/auth/jwt/login
+            echo 6-----------------------------------------
+        env:
+          VAULT_ROLE: "gha-test-role2"
+          VAULT_URL: "https://hexadic-unridered-tasia.ngrok-free.dev"
+          GITHUB_OIDC_TOKEN: ${{ steps.auth-token.outputs.token }}

@@ -5,15 +5,15 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  #push:
+  #  branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 env:
-  hashiUrl: https://hexadic-unridered-tasia.ngrok-free.dev:8200
+  hashiUrl: https://hexadic-unridered-tasia.ngrok-free.dev
   roleName: gha-test-role
   audience: https://github.com/murugcp
  # namespace: cicd
@@ -28,36 +28,6 @@ jobs:
         id-token: write
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Get OIDC token
-        id: get_token
-        uses: actions/checkout@v4 # or any other action
-        # The following steps show how to get the token
-        # The id-token permission allows you to get the token
-        # If the token is not requested from the `actions/checkout@v3` action
-        # The token is available in `steps.get_token.outputs.token`
-        # Use the token to get an access token from your cloud provider
-        run: |
-          echo "Token: ${{ steps.get_token.outputs.token }}"
-
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo 1.Add other actions to build,
-          echo 2.test, and deploy your project.
-          #echo $(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://github.com/murugcp") | jq "{ jwt: .value, role: \"gha-test-role\" }" > ./token.json
-          #echo 'GitHub Actions Token Claims'
-          #cat ./token.json | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
-
-          #echo 'Vault Login Response'
-          #curl -sSLf -X POST -H "Content-Type: application/json" --data @token.json https://hexadic-unridered-tasia.ngrok-free.dev:8200/v1/auth/jwt/github_actions/login
-
-          # Remove the token file when we're done (if we don't fail)
-          #rm ./token.json
       - name: perform token run
         run: |
          echo $(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://github.com/murugcp")
@@ -75,7 +45,10 @@ jobs:
          exportEnv: true
          secrets: |
            secret/data/apikeys deploymentServer | DEPLOYMENT_KEY
-
+      - name: output here
+        run: |
+         echo helloooo
+         echo $DEPLOYMENT_KEY 
 
 
 
