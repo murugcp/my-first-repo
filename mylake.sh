@@ -28,9 +28,9 @@ start_services() {
     sleep 5  # Allow services to initialize
     
     # Step 2: Start Trino query engine (coordinator + workers)
-    #echo "Starting Trino query engine..."
-    #docker compose -f docker-compose-trino.yaml up -d
-    #sleep 30  # Trino needs more time to fully initialize and connect to catalog
+    echo "Starting Trino query engine..."
+    docker compose -f trino.yaml up -d
+    sleep 30  # Trino needs more time to fully initialize and connect to catalog
     
     # Step 3: Start Airflow orchestration services
     #echo "Starting Airflow orchestration services..."
@@ -47,7 +47,7 @@ start_services() {
     echo ""
 
     # Initialize Trino with required schemas
-    #init_trino
+    init_trino
     
     # Uncomment the line below if you want to automatically load seed data on startup
     # load_dbt_seed_data
